@@ -2,6 +2,8 @@
 
 https://www.youtube.com/watch?v=xZDB1naRUlk&t=2364s 
 
+https://raw.githubusercontent.com/RodrigoMvs123/Development-with-Large-Language-Models-Tutorial-OpenAI-Langchain-Agents-Chroma/main/README.md
+
 https://github.com/pythonontheplane123/LLM_course_part_1 
 
 What is a Large Language Model ( LLM ) ?
