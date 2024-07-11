@@ -1,4 +1,5 @@
-# Development-with-Large-Language-Models-Tutorial-OpenAI-Langchain-Agents-Chroma
+
+## Development-with-Large-Language-Models-Tutorial-OpenAI-Langchain-Agents-Chroma
 
 https://www.youtube.com/watch?v=xZDB1naRUlk&t=2364s 
 
@@ -9,66 +10,55 @@ https://github.com/RodrigoMvs123/Development-with-Large-Language-Models-Tutorial
 https://github.com/pythonontheplane123/LLM_course_part_1 
 
 What is a Large Language Model ( LLM ) ?
+
 Deep learning techniques like massive neural network combined with huge amounts of data and then aligned to human values in an attempt to create a reasoning engine.
 
 Examples: BERT, GPT3.5, GPT4, Llama
 
 
-
 Under the hood
 
-Steps: 
+## Steps
+
 1 Choosing Architecture and tokens
 
 How to make LLMs understand words? 
 Tokenization: Converting words to numbers/tokens that the model can use mathematically.
 Converting text to numbers and back.
 
-
 Choosing the brain ( Model Architecture )
-
-
-
-
 
 2 Training method
 
 Next work/token predictic task:
+
 Trained to predict these tokens by giving it billions of sentences /chunks and Answers
 Data includes: Code, College Textbooks, Articles, lyrics, podcasts … etc
 
 Multiple tokens?
+
 Put the output of your predicted token back into inputs and so on until model outputs a stop sequence token
 
-
-Step 1
+## I
 Collect demonstration data, and train a supervised policy
 
-Step 2
+## II
 Collect comparison data, and train a reward model
 
-Step 3 
+## III
 Optimize a policy against the reward model using reinforcement learning
-
-
 
 3 RLHF
 
-
-
 4 Optional Fine-tinning
-
-
 
 5 Inference, Prompting and Prompt Engineering 
 
-
 OpenAI Playground
+- https://platform.openai.com/playground 
 
-https://platform.openai.com/playground 
-
-Playground
-
+## Playground
+```
 SYSTEM                                 USER Hi ! print out the first 10 digits of the fibonacci sequence  
                                                 using Python
 you are a programmer
@@ -89,14 +79,19 @@ def fibonacci(n):
 0, 1, 1, 2, 3, 5, 8, 13, 21, 34.
 
 API Keys
+```
 Create new secret key 
 …
 
 https://colab.research.google.com/drive/1gi2yDvvhUwLT7c8ZEXz6Yja3cG5P2owP?usp=sharing 
-
+```
 
 Chainlit.io
+
 https://docs.chainlit.io/overview 
+
+## Source Code
+```python
 
 Visual Studio Code
 EXPLORER
@@ -129,16 +124,21 @@ def get_gpt_output(user_message):
 @cl.on_message
 async def main(message : str):
     await cl.Message(content = f"{get_gpt_output(message)['choices'][0]['message']['content']}",).send()
+```
 
-Visual Studio Code
+### Visual Studio Code
 Terminal
+```bash
 pip install chainlit
 pip install openai
 chainlit run main.py -w ( localhost:8000 )
+```
 
 LangChain
-https://www.langchain.com/ 
+- https://www.langchain.com/ 
 
+## Source Code
+```python
 Visual Studio Code
 EXPLORER
 OPEN EDITORS
@@ -170,14 +170,17 @@ async def main(message : str):
     res = await llm_chain.acall(message, callbacks=[cl.AsyncLangchainCallbackHandler()])
 
     await cl.Message(content=res["text"]).send()
+```
 
-Visual Studio Code
+### Visual Studio Code
 Terminal
+```bash
 pip install -U langchain
 chainlit run langchain_integration.py -w ( localhost:8000 )
+```
 
 Vector DBs and Embeddings 
-
+```
 Embeddings
 Recommendation system
 Search Engines
@@ -185,13 +188,16 @@ Generative AI
 Memory for LLMs
 Context window expansion
 Agents like AutoGPT
-
+```
+```
 Vector Databases
 Fast retrieval of the relevant context from embeddings
 Convenient storage embeddings
 Context length augmentation 
+```
 
-
+## Source Code
+```python
 Visual Studio Code
 EXPLORER
 OPEN EDITORS
@@ -218,7 +224,9 @@ results = collections.query(
 )
 
 print(results)
+```
 
+```python
 Visual Studio Code
 EXPLORER
 OPEN EDITORS
@@ -242,9 +250,6 @@ from langchain.chat_models import ChatOpenAI
 import chainlit as cl
 from chainlit.types import AskFileResponse
 
-
-
-
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
 embeddings = OpenAIEmbeddings()
 
@@ -252,7 +257,6 @@ welcome_message = """Welcome to the Chainlit PDF QA demo! To get started:
 1. Upload a PDF or text file
 2. Ask a question about the file
 """
-
 
 def process_file(file: AskFileResponse):
     import tempfile
@@ -271,7 +275,6 @@ def process_file(file: AskFileResponse):
             doc.metadata["source"] = f"source_{i}"
         return docs
 
-
 def get_docsearch(file: AskFileResponse):
     docs = process_file(file)
 
@@ -284,7 +287,6 @@ def get_docsearch(file: AskFileResponse):
         docs, embeddings
     )
     return docsearch
-
 
 @cl.on_chat_start
 async def start():
@@ -318,7 +320,6 @@ async def start():
     await msg.update()
 
     cl.user_session.set("chain", chain)
-
 
 @cl.on_message
 async def main(message):
@@ -364,32 +365,41 @@ async def main(message):
         await cb.final_stream.update()
     else:
         await cl.Message(content=answer, elements=source_elements).send()
+```
 
-Visual Studio Code
+### Visual Studio Code
 Terminal
+```bash
 pip install chroma
 pip install chromadb
 export HNSWLIB_NO_NATIVE = 1
 chainlit run document_qa.py 
+```
 
+```
 Web Browsing + Agents
 Project #3
 Project #4
-
+```
 Why Browse the Web ?
+
 There is a knowledge cutoff
 Databases vs Reasoning Engines 
 Reduce bias incurred while training
 
-Agents 
+#### Agents 
+
 The problem
+
 Find the answer to “what is RLHF” ?
 
 Resources Langchain Gives us:
-https://arxiv.org/ 
+- https://arxiv.org/ 
 
-https://python.langchain.com/docs/integrations/providers/arxiv 
+- https://python.langchain.com/docs/integrations/providers/arxiv 
 
+## Source Code
+```python
 Visual Studio Code
 EXPLORER
 OPEN EDITORS
@@ -425,7 +435,9 @@ agent_chain = initialize_agent(
 agent_chain.run(
     "what is RLHF?",
 )
+```
 
+```python
 Visual Studio Code
 EXPLORER
 OPEN EDITORS
@@ -445,8 +457,6 @@ from langchain.chat_models import ChatOpenAI
 from langchain.agents import load_tools, initialize_agent, AgentType
 import os
 
-
-
 @cl.on_chat_start
 def start():
     llm = ChatOpenAI(temperature=0.5, streaming=True)
@@ -465,18 +475,22 @@ def start():
 
     cl.user_session.set("agent", agent_chain)
 
-
 @cl.on_message
 async def main(message):
     agent = cl.user_session.get("agent")  # type: AgentExecutor
     cb = cl.LangchainCallbackHandler(stream_final_answer=True)
 
     await cl.make_async(agent.run)(message, callbacks=[cb])
+```
 
-Visual Studio Code
+### Visual Studio Code
 Terminal
+```bash
 chainlit run internet_browsing_Arxiv_chainlit.py -w ( localhost:8000 )
+```
 
+## Source Code
+```python
 Visual Studio Code
 EXPLORER
 OPEN EDITORS
@@ -505,7 +519,9 @@ agent_executor = create_python_agent(
 )
 
 agent_executor.run("What is the 10th fibonacci number?")
+```
 
+```python
 Visual Studio Code
 EXPLORER
 OPEN EDITORS
@@ -548,11 +564,16 @@ agent = initialize_agent(
 )
 
 agent.run('Whats a joe rogan video on an interesting topic')
+```
 
-Visual Studio Code
+### Visual Studio Code
 Terminal
+```bash
 pip install youtube_search
+```
 
+## Source Code
+```python
 Visual Studio Code
 EXPLORER
 OPEN EDITORS
@@ -588,7 +609,9 @@ agent = initialize_agent(
 agent.run(
     "create a text file called empty and inside it, add code that trains a basic convolutional neural network for 4 epochs"
 )
+```
 
+```python
 Visual Studio Code
 EXPLORER
 OPEN EDITORS
@@ -619,11 +642,7 @@ from langchain.agents import AgentType
 import os
 from langchain.tools import ShellTool
 
-
-
-
 shell_tool = ShellTool()
-
 
 @cl.on_chat_start
 def start():
@@ -642,18 +661,21 @@ def start():
     )
     cl.user_session.set("agent", agent)
 
-
 @cl.on_message
 async def main(message):
     agent = cl.user_session.get("agent")  # type: AgentExecutor
     cb = cl.LangchainCallbackHandler(stream_final_answer=True)
 
     await cl.make_async(agent.run)(message, callbacks=[cb])
+```
 
-Visual Studio Code
+### Visual Studio Code
 Terminal
+```bash
 chainlit run Combination_f_both.py -w ( localhost:8000 )
+```
 
+```python
 Visual Studio Code
 EXPLORER
 OPEN EDITORS
@@ -682,7 +704,6 @@ from langchain.agents import AgentType
 def multiplier(a, b):
     return a / b
 
-
 def parsing_multiplier(string):
     a, b = string.split(",")
     return multiplier(int(a), int(b))
@@ -700,6 +721,4 @@ agent = initialize_agent(
 )
 
 agent.run("3 times four?")
-
-
-
+```
